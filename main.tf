@@ -14,7 +14,7 @@ terraform {
 module "dynamodb_table_1" {
   source = "/dynamo_db"
 
-  name              = "first"
+  name              = "words_random"
   hash_key          = "HashKey"
   range_key         = "RangeKey"
   enable_autoscaler = true
