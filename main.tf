@@ -1,57 +1,75 @@
+# #################################################################################
+# Creates POC Lambda-DynamoDB-ApiGateway Reader
+#
+# MRHF 22-JUN-2022 23:38
+#
+# #################################################################################
+
+# #################################################################################
+#  Creates the S3 For TFState
+#
+# #################################################################################
+
 provider "aws" {
-  region = var.region
+  region = var.gv_aws_region
 }
 
 # Backend configuration
-terraform {
-  backend "s3" {
-    bucket = "s3-terraform-devops-poc-mrhf-1175"
-    key    = "poc-ddevops/"
-    region = "us-east-1"
-  }
+# terraform {
+#   backend "s3" {
+#     bucket = "s3-terraform-devops-poc-mrhf-1175"
+#     key    = "poc-ddevops/"
+#     region = "us-east-1"
+#   }
+# }
+
+module "dynamodb_table" {
+  source                 = "./dynamo_db"
+  mdyn_db_db_name        = var.gv_dyn_db_db_name
+  mdyn_db_range_key      = var.gv_dyn_db_range_key
+  mdyn_db_hash_key       = var.gv_dyn_db_hash_key
+  mdyn_db_write_capacity = var.gv_dyn_db_write_capacity
+  mdyn_db_read_capacity  = var.gv_dyn_db_read_capacity
+  mdyn_db_billing_mode   = var.gv_dyn_db_billing_mode
+  mdyn_db_tags           = var.gv_common_tags
 }
 
-module "dynamodb_table_1" {
-  source = "/dynamo_db"
+module "cw_logs" {
+  source             = "./cloudwatch"
+  mcw_tags           = var.gv_common_tags
+  mcw_log_group_name = var.gv_lambda_function_name
+  mcw_retention_days = var.gv_retention_days
+}
 
-  name              = "words_random"
-  hash_key          = "HashKey"
-  range_key         = "RangeKey"
-  enable_autoscaler = true
+# module "s3" {
+#   source                = "./s3"
+#   ms3_enable_versioning = var.gv_s3_enable_versioning
+#   ms3_force_destroy     = var.gv_s3_force_destroy
+#   ms3_common_tags       = var.gv_common_tags
+# }
 
-  dynamodb_attributes = [
-    {
-      name = "word"
-      type = "N"
-    }
-  ]
+module "iam" {
+  source           = "./iam"
+  miam_common_tags = var.gv_common_tags
+}
 
-  local_secondary_index_map = [
-    {
-      name               = "TimestampSortIndex"
-      range_key          = "Timestamp"
-      projection_type    = "INCLUDE"
-      non_key_attributes = ["HashKey", "RangeKey"]
-    },
-    {
-      name               = "HighWaterIndex"
-      range_key          = "Timestamp"
-      projection_type    = "INCLUDE"
-      non_key_attributes = ["HashKey", "RangeKey"]
-    }
-  ]
+module "lambda" {
+  source                    = "./lambda"
+  mlambda_function_name     = var.gv_lambda_function_name
+  mlambda_s3_bucket_arn     = var.gv_s3_for_lambda_code
+  mlambda_handler           = var.gv_lambda_handler
+  mlambda_runtime           = var.gv_lambda_runtime
+  mlambda_s3_code_key_file  = var.gv_lambda_s3_code_key_file
+  mlambda_common_tags       = var.gv_common_tags
+  mlambda_iam_exec_role_arn = module.iam.exp_iam_lambda_role_arn
+}
 
-  global_secondary_index_map = [
-    {
-      name               = "DailyAverageIndex"
-      hash_key           = "DailyAverage"
-      range_key          = "HighWater"
-      write_capacity     = 5
-      read_capacity      = 5
-      projection_type    = "INCLUDE"
-      non_key_attributes = ["HashKey", "RangeKey"]
-    }
-  ]
-
-  context = module.this.context
+module "api-gtw-ws" {
+  source                   = "./api-gtw"
+  mapi-gtw-common_tags     = var.gv_common_tags
+  mapi-gtw-name            = var.gv_api-gtw-name
+  mapi-gtw-protocol        = var.gv_api-gtw-protocol
+  mapi-gtw-route-selection = var.gv_api-gtw-route-selection
+  mapi-gtw-lambda_arn      = module.lambda.exp_mlambda_uri
+  mapi_gtw-cw-role_arn     = module.iam.exp_iam_cloudwatch-role-api-gtw
 }
