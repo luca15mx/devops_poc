@@ -30,3 +30,6 @@ override.tf.json
 
 # Output plan files
 **/*.out
+
+# General TXT Files
+**/*.txt
