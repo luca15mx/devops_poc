@@ -35,10 +35,12 @@ module "dynamodb_table" {
 }
 
 module "cw_logs" {
-  source             = "./cloudwatch"
-  mcw_tags           = var.gv_common_tags
-  mcw_log_group_name = var.gv_lambda_function_name
-  mcw_retention_days = var.gv_retention_days
+  source                        = "./cloudwatch"
+  mcw_tags                      = var.gv_common_tags
+  mcw_log_group_name            = var.gv_lambda_function_name
+  mcw_log_group_connect_name    = var.gv_lambda_connect_function_name
+  mcw_log_group_disconnect_name = var.gv_lambda_disconnect_function_name
+  mcw_retention_days            = var.gv_retention_days
 }
 
 # module "s3" {
@@ -54,22 +56,36 @@ module "iam" {
 }
 
 module "lambda" {
-  source                    = "./lambda"
-  mlambda_function_name     = var.gv_lambda_function_name
-  mlambda_s3_bucket_arn     = var.gv_s3_for_lambda_code
-  mlambda_handler           = var.gv_lambda_handler
-  mlambda_runtime           = var.gv_lambda_runtime
-  mlambda_s3_code_key_file  = var.gv_lambda_s3_code_key_file
+  source                   = "./lambda"
+  mlambda_function_name    = var.gv_lambda_function_name
+  mlambda_s3_bucket_arn    = var.gv_s3_for_lambda_code
+  mlambda_handler          = var.gv_lambda_handler
+  mlambda_runtime          = var.gv_lambda_runtime
+  mlambda_s3_code_key_file = var.gv_lambda_s3_code_key_file
+
+
+  mlambda_connect_function_name    = var.gv_lambda_connect_function_name
+  mlambda_s3_connect_code_key_file = var.gv_lambda_s3_connect_code_key_file
+  mlambda_connect_handler          = var.gv_lambda_connect_handler
+  mlambda_connect_runtime          = var.gv_lambda_connect_runtime
+
+  mlambda_disconnect_function_name    = var.gv_lambda_disconnect_function_name
+  mlambda_s3_disconnect_code_key_file = var.gv_lambda_s3_disconnect_code_key_file
+  mlambda_disconnect_handler          = var.gv_lambda_disconnect_handler
+  mlambda_disconnect_runtime          = var.gv_lambda_disconnect_runtime
+
   mlambda_common_tags       = var.gv_common_tags
   mlambda_iam_exec_role_arn = module.iam.exp_iam_lambda_role_arn
 }
 
 module "api-gtw-ws" {
-  source                   = "./api-gtw"
-  mapi-gtw-common_tags     = var.gv_common_tags
-  mapi-gtw-name            = var.gv_api-gtw-name
-  mapi-gtw-protocol        = var.gv_api-gtw-protocol
-  mapi-gtw-route-selection = var.gv_api-gtw-route-selection
-  mapi-gtw-lambda_arn      = module.lambda.exp_mlambda_uri
-  mapi_gtw-cw-role_arn     = module.iam.exp_iam_cloudwatch-role-api-gtw
+  source                            = "./api-gtw"
+  mapi-gtw-common_tags              = var.gv_common_tags
+  mapi-gtw-name                     = var.gv_api-gtw-name
+  mapi-gtw-protocol                 = var.gv_api-gtw-protocol
+  mapi-gtw-route-selection          = var.gv_api-gtw-route-selection
+  mapi-gtw-lambda_uri               = module.lambda.exp_mlambda_uri
+  mapi-gtw-lambda_ws_connect_uri    = module.lambda.exp_mlambda_ws_connect_uri
+  mapi-gtw-lambda_ws_disconnect_uri = module.lambda.exp_mlambda_ws_disconnect_uri
+  mapi_gtw-cw-role_arn              = module.iam.exp_iam_cloudwatch-role-api-gtw
 }

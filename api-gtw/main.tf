@@ -28,9 +28,9 @@ resource "aws_apigatewayv2_integration" "api-gtw-ri-lambda" {
 
   connection_type           = "INTERNET"
   content_handling_strategy = "CONVERT_TO_TEXT"
-  description               = "Lambda example"
+  description               = "Lambda function"
   integration_method        = "POST"
-  integration_uri           = var.mapi-gtw-lambda_arn
+  integration_uri           = var.mapi-gtw-lambda_uri
   passthrough_behavior      = "WHEN_NO_MATCH"
 }
 
