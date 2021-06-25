@@ -29,3 +29,7 @@ variable "mapi-gtw-lambda_ws_disconnect_uri" {
 variable "mapi_gtw-cw-role_arn" {
   type = string
 }
+
+variable "mapi-gtw-stage_name" {
+  type = string
+}

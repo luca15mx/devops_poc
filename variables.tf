@@ -108,6 +108,7 @@ variable "gv_lambda_disconnect_handler" {
 variable "gv_lambda_connect_runtime" {
   type    = string
   default = "nodejs14.x"
+  # default = "python3.8"
 }
 
 variable "gv_lambda_disconnect_runtime" {
@@ -130,6 +131,11 @@ variable "gv_api-gtw-protocol" {
 variable "gv_api-gtw-route-selection" {
   type    = string
   default = "$request.body.action"
+}
+
+variable "gv_api-gtw-stage-name" {
+  type    = string
+  default = "dev-stage"
 }
 
 # COMMON TAGS

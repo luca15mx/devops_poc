@@ -84,6 +84,7 @@ module "api-gtw-ws" {
   mapi-gtw-name                     = var.gv_api-gtw-name
   mapi-gtw-protocol                 = var.gv_api-gtw-protocol
   mapi-gtw-route-selection          = var.gv_api-gtw-route-selection
+  mapi-gtw-stage_name               = var.gv_api-gtw-stage-name
   mapi-gtw-lambda_uri               = module.lambda.exp_mlambda_uri
   mapi-gtw-lambda_ws_connect_uri    = module.lambda.exp_mlambda_ws_connect_uri
   mapi-gtw-lambda_ws_disconnect_uri = module.lambda.exp_mlambda_ws_disconnect_uri
