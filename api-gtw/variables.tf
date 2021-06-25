@@ -14,7 +14,15 @@ variable "mapi-gtw-route-selection" {
   type = string
 }
 
-variable "mapi-gtw-lambda_arn" {
+variable "mapi-gtw-lambda_uri" {
+  type = string
+}
+
+variable "mapi-gtw-lambda_ws_connect_uri" {
+  type = string
+}
+
+variable "mapi-gtw-lambda_ws_disconnect_uri" {
   type = string
 }
 
