@@ -1,9 +1,11 @@
-output "exp_mlambda_arn" {
-  value = aws_lambda_function.ws_crud_lambda.arn
-}
+# #################################################################################
+#
+#  OUTPUTS FOR LAMBDA MODULE
+#
+# #################################################################################
 
-output "exp_mlambda_uri" {
-  value = aws_lambda_function.ws_crud_lambda.invoke_arn
+output "exp_mlambda_ws_default_uri" {
+  value = aws_lambda_function.ws_crud_default_lambda.invoke_arn
 }
 
 output "exp_mlambda_ws_connect_uri" {

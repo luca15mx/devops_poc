@@ -6,7 +6,7 @@
 #
 ################################################################################
 
-resource "aws_lambda_function" "ws_crud_lambda" {
+resource "aws_lambda_function" "ws_crud_default_lambda" {
   function_name = var.mlambda_function_name
   s3_bucket     = var.mlambda_s3_bucket_arn
   s3_key        = var.mlambda_s3_code_key_file

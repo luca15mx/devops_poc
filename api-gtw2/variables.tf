@@ -1,25 +1,25 @@
 # #################################################################################
 #
-#  VARIABLES FOR CLOUD WATCH MODULE
+#  VARIABLES FOR API-GATEWAY MODULE
 #
 # #################################################################################
 
-variable "mcw_tags" {
+variable "mapi-gtw-common_tags" {
   type = map
 }
 
-variable "mcw_log_group_name" {
+variable "mapi-gtw-lambda_ws_default_uri" {
   type = string
 }
 
-variable "mcw_log_group_connect_name" {
+variable "mapi-gtw-lambda_ws_connect_uri" {
   type = string
 }
 
-variable "mcw_log_group_disconnect_name" {
+variable "mapi-gtw-lambda_ws_disconnect_uri" {
   type = string
 }
 
-variable "mcw_retention_days" {
+variable "mapi-gtw-stage_name" {
   type = string
 }

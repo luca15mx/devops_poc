@@ -74,15 +74,11 @@ module "lambda" {
   mlambda_iam_exec_role_arn           = module.iam.exp_iam_lambda_role_arn
 }
 
-module "api-gtw-ws" {
-  source                            = "./api-gtw"
-  mapi-gtw-common_tags              = var.gv_common_tags
-  mapi-gtw-name                     = var.gv_api-gtw-name
-  mapi-gtw-protocol                 = var.gv_api-gtw-protocol
-  mapi-gtw-route-selection          = var.gv_api-gtw-route-selection
-  mapi-gtw-stage_name               = var.gv_api-gtw-stage-name
-  mapi-gtw-lambda_uri               = module.lambda.exp_mlambda_uri
+module "api-gtw2" {
+  source                            = "./api-gtw2"
   mapi-gtw-lambda_ws_connect_uri    = module.lambda.exp_mlambda_ws_connect_uri
   mapi-gtw-lambda_ws_disconnect_uri = module.lambda.exp_mlambda_ws_disconnect_uri
-  mapi_gtw-cw-role_arn              = module.iam.exp_iam_cloudwatch-role-api-gtw
+  mapi-gtw-lambda_ws_default_uri    = module.lambda.exp_mlambda_ws_default_uri
+  mapi-gtw-stage_name               = var.gv_api-gtw-stage-name
+  mapi-gtw-common_tags              = var.gv_common_tags
 }
