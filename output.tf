@@ -18,18 +18,30 @@
 #   value       = module.s3.exp_s3_bucket_config_id
 # }
 
-output "gexp_lambda_exec_role_arn" {
-  value = module.iam.exp_iam_lambda_role_arn
+# output "gexp_lambda_exec_role_arn" {
+#   value = module.iam.exp_iam_lambda_role_arn
+# }
+#
+# output "gexp_cw_log_group_arn" {
+#   value = module.cw_logs.mcw_cw_log_group_arn
+# }
+
+# output "gexp_api-gtw_endpoint" {
+#   value = module.api-gtw2.mapi-gtw-endpoint
+# }
+
+output "URI_Lambda_Connect" {
+  value = module.lambda.exp_mlambda_ws_connect_uri
 }
 
-output "gexp_lambda_arn" {
-  value = module.lambda.exp_mlambda_arn
+output "URI_Lambda_Disconnect" {
+  value = module.lambda.exp_mlambda_ws_disconnect_uri
 }
 
-output "gexp_cw_log_group_arn" {
-  value = module.cw_logs.mcw_cw_log_group_arn
+output "URI_Lambda_Default" {
+  value = module.lambda.exp_mlambda_ws_default_uri
 }
 
-output "gexp_api-gtw_endpoint" {
-  value = module.api-gtw-ws.mapi-gtw-endpoint
+output "WSS_Invoke_URL" {
+  value = module.api-gtw2.mapi-gtw-wss-invoke-url
 }

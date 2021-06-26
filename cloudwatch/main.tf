@@ -1,3 +1,9 @@
+# #################################################################################
+#
+#  CREATES THE CLOUD WATCH LOGS GROUPS
+#
+# #################################################################################
+
 resource "aws_cloudwatch_log_group" "ws-crud-items" {
   name              = "/aws/lambda/${var.mcw_log_group_name}"
   tags              = var.mcw_tags

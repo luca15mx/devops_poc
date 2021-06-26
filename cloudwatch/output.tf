@@ -1,3 +1,9 @@
+# #################################################################################
+#
+#  OUTPUTS FOR CLOUD WATCH MODULE
+#
+# #################################################################################
+
 output "mcw_cw_log_group_arn" {
   value = aws_cloudwatch_log_group.ws-crud-items.arn
 }
