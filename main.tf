@@ -56,26 +56,22 @@ module "iam" {
 }
 
 module "lambda" {
-  source                   = "./lambda"
-  mlambda_function_name    = var.gv_lambda_function_name
-  mlambda_s3_bucket_arn    = var.gv_s3_for_lambda_code
-  mlambda_handler          = var.gv_lambda_handler
-  mlambda_runtime          = var.gv_lambda_runtime
-  mlambda_s3_code_key_file = var.gv_lambda_s3_code_key_file
-
-
-  mlambda_connect_function_name    = var.gv_lambda_connect_function_name
-  mlambda_s3_connect_code_key_file = var.gv_lambda_s3_connect_code_key_file
-  mlambda_connect_handler          = var.gv_lambda_connect_handler
-  mlambda_connect_runtime          = var.gv_lambda_connect_runtime
-
+  source                              = "./lambda"
+  mlambda_function_name               = var.gv_lambda_function_name
+  mlambda_s3_bucket_arn               = var.gv_s3_for_lambda_code
+  mlambda_handler                     = var.gv_lambda_handler
+  mlambda_runtime                     = var.gv_lambda_runtime
+  mlambda_s3_code_key_file            = var.gv_lambda_s3_code_key_file
+  mlambda_connect_function_name       = var.gv_lambda_connect_function_name
+  mlambda_s3_connect_code_key_file    = var.gv_lambda_s3_connect_code_key_file
+  mlambda_connect_handler             = var.gv_lambda_connect_handler
+  mlambda_connect_runtime             = var.gv_lambda_connect_runtime
   mlambda_disconnect_function_name    = var.gv_lambda_disconnect_function_name
   mlambda_s3_disconnect_code_key_file = var.gv_lambda_s3_disconnect_code_key_file
   mlambda_disconnect_handler          = var.gv_lambda_disconnect_handler
   mlambda_disconnect_runtime          = var.gv_lambda_disconnect_runtime
-
-  mlambda_common_tags       = var.gv_common_tags
-  mlambda_iam_exec_role_arn = module.iam.exp_iam_lambda_role_arn
+  mlambda_common_tags                 = var.gv_common_tags
+  mlambda_iam_exec_role_arn           = module.iam.exp_iam_lambda_role_arn
 }
 
 module "api-gtw-ws" {

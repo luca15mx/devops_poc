@@ -36,26 +36,26 @@ resource "aws_apigatewayv2_route" "api-gtw-ri-connect" {
   route_key = "$connect"
   target    = "integrations/${aws_apigatewayv2_integration.api-gtw-ri-lambda-connect.id}"
 }
-
-# ROUTE DISCONNECT
-
-resource "aws_apigatewayv2_integration" "api-gtw-ri-lambda-disconnect" {
-  api_id           = aws_apigatewayv2_api.api-gtw.id
-  integration_type = "AWS_PROXY"
-
-  connection_type           = "INTERNET"
-  content_handling_strategy = "CONVERT_TO_TEXT"
-  description               = "Lambda function"
-  integration_method        = "POST"
-  integration_uri           = var.mapi-gtw-lambda_ws_disconnect_uri
-  passthrough_behavior      = "WHEN_NO_MATCH"
-}
-
-resource "aws_apigatewayv2_route" "api-gtw-ri-disconnect" {
-  api_id    = aws_apigatewayv2_api.api-gtw.id
-  route_key = "$disconnect"
-  target    = "integrations/${aws_apigatewayv2_integration.api-gtw-ri-lambda-disconnect.id}"
-}
+#
+# # ROUTE DISCONNECT
+#
+# resource "aws_apigatewayv2_integration" "api-gtw-ri-lambda-disconnect" {
+#   api_id           = aws_apigatewayv2_api.api-gtw.id
+#   integration_type = "AWS_PROXY"
+#
+#   connection_type           = "INTERNET"
+#   content_handling_strategy = "CONVERT_TO_TEXT"
+#   description               = "Lambda function"
+#   integration_method        = "POST"
+#   integration_uri           = var.mapi-gtw-lambda_ws_disconnect_uri
+#   passthrough_behavior      = "WHEN_NO_MATCH"
+# }
+#
+# resource "aws_apigatewayv2_route" "api-gtw-ri-disconnect" {
+#   api_id    = aws_apigatewayv2_api.api-gtw.id
+#   route_key = "$disconnect"
+#   target    = "integrations/${aws_apigatewayv2_integration.api-gtw-ri-lambda-disconnect.id}"
+# }
 
 # resource "aws_apigatewayv2_integration_response" "example" {
 #   api_id                   = aws_apigatewayv2_api.api-gtw.id
@@ -65,20 +65,25 @@ resource "aws_apigatewayv2_route" "api-gtw-ri-disconnect" {
 
 # STAGES AND DEPLOYMENT
 
-resource "aws_apigatewayv2_stage" "api-gtw-stage" {
-  api_id        = aws_apigatewayv2_api.api-gtw.id
-  name          = var.mapi-gtw-stage_name
-  deployment_id = aws_apigatewayv2_deployment.api-gtw-deployment.id
-}
-
-resource "aws_apigatewayv2_deployment" "api-gtw-deployment" {
-  api_id      = aws_apigatewayv2_api.api-gtw.id
-  description = "Development deployment"
-
-  lifecycle {
-    create_before_destroy = true
-  }
-}
+# resource "aws_apigatewayv2_stage" "api-gtw-stage" {
+#   api_id        = aws_apigatewayv2_api.api-gtw.id
+#   name          = var.mapi-gtw-stage_name
+#   deployment_id = aws_apigatewayv2_deployment.api-gtw-deployment.id
+# }
+#
+# resource "aws_apigatewayv2_deployment" "api-gtw-deployment" {
+#   api_id      = aws_apigatewayv2_api.api-gtw.id
+#   description = "Development deployment"
+#
+#   lifecycle {
+#     create_before_destroy = true
+#   }
+#
+#   depends_on = [
+#     aws_apigatewayv2_route.api-gtw-ri-connect,
+#     aws_apigatewayv2_route.api-gtw-ri-disconnect
+#   ]
+# }
 
 # MONITORING
 
