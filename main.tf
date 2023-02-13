@@ -10,10 +10,6 @@
 #
 # #################################################################################
 
-provider "aws" {
-  region = var.gv_aws_region
-}
-
 # Backend configuration
 # terraform {
 #   backend "s3" {
@@ -26,7 +22,7 @@ provider "aws" {
 module "dynamodb_table" {
   source                 = "./dynamo_db"
   mdyn_db_db_name        = var.gv_dyn_db_db_name
-  mdyn_db_range_key      = var.gv_dyn_db_range_key
+  # mdyn_db_range_key      = var.gv_dyn_db_range_key
   mdyn_db_hash_key       = var.gv_dyn_db_hash_key
   mdyn_db_write_capacity = var.gv_dyn_db_write_capacity
   mdyn_db_read_capacity  = var.gv_dyn_db_read_capacity
