@@ -1,18 +1,26 @@
----
-name: Check PR
-"on":
+name: tfsec
+on:
   push:
-    
+    # branches:
+    #   - main
   pull_request:
-    types: [opened, synchronize]
 jobs:
   tfsec:
-    name: tfsec
+    name: tfsec sarif report
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Terraform security scan
-        uses: triat/terraform-security-scan@v3.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+      - name: Clone repo
+        uses: actions/checkout@v3.3.0
+
+      - name: tfsec
+        uses: tfsec/tfsec-sarif-action@main
+        with:
+          sarif_file: tfsec.sarif         
+
+      - name: Upload SARIF file
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          # Path to SARIF file relative to the root of the repository
+          sarif_file: tfsec.sarif    
+
