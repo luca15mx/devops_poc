@@ -4,4 +4,6 @@
 #
 ################################################################################
 
-variable "miam_common_tags" {}
+variable "miam_common_tags" {
+    type = map
+}

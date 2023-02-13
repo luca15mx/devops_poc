@@ -34,10 +34,10 @@ variable "mdyn_db_hash_key" {
   # default = "ID"
 }
 
-variable "mdyn_db_range_key" {
-  type = string
-  # default = "word"
-}
+# variable "mdyn_db_range_key" {
+#   type = string
+#   # default = "word"
+# }
 
 variable "mdyn_db_tags" {
   type = map

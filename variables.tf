@@ -4,9 +4,9 @@
 #
 # #################################################################################
 
-# variable "gv_aws_region" {
-#   default = "us-east-1"
-# }
+variable "gv_aws_region" {
+  default = "us-east-1"
+}
 
 variable "gv_dyn_db_db_name" {
   type    = string
