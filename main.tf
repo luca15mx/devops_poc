@@ -10,10 +10,6 @@
 #
 # #################################################################################
 
-provider "aws" {
-  region = var.gv_aws_region
-}
-
 # Backend configuration
 # terraform {
 #   backend "s3" {

@@ -9,7 +9,6 @@
 #  CREATES THE API-GATEWAY, ROUTES AND DEPLOYMENTS
 #   
 # #################################################################################
-
 resource "aws_apigatewayv2_api" "api-gtw2" {
   name                       = "apigtw-ws-amwell"
   protocol_type              = "WEBSOCKET"
