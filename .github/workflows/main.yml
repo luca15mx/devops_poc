@@ -1,3 +1,10 @@
+---
+name: Check PR
+"on":
+  push:
+    
+  pull_request:
+    types: [opened, synchronize]
 jobs:
   tfsec:
     name: tfsec
